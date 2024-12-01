@@ -2,7 +2,7 @@ import React from 'react';
 import './FigurePicker.css';
 import Figure from './Figure';
 
-const FigurePicker = () => {
+const FigurePicker = ({ onClick }) => {
     // Figure array k:king, q:queen, b:bishop, n:knight, r:rook, p:pawn
     // const figures = ['k', 'q', 'b', 'n', 'r', 'p'];
 
@@ -22,6 +22,7 @@ const FigurePicker = () => {
                 <Figure
                     key={figure}
                     figure={figure}
+                    onClick={() => onClick(figure)}
                 />
             ))}
         </div>

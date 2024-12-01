@@ -2,7 +2,7 @@ import React from 'react';
 import Square from './Square';
 import './Board.css';
 
-const Board = () => {
+const Board = ({ onClick }) => {
     const board = [];
     for (let row = 0; row < 8; row++) {
         const squares = [];
@@ -11,7 +11,7 @@ const Board = () => {
                 key={`${row}-${col}`}
                 row={row}
                 col={col}
-                onClick={() => console.log(`clicked on ${row}, ${col}`)} />);
+                onClick={() => onClick(row, col)} />);
         }
         board.push(
             <div key={row} className="board-row" >

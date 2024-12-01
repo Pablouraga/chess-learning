@@ -25,7 +25,7 @@ function App() {
   const handleSquarePicked = (row, col) => {
     if (selectedFigure != null) {
       setSelectedSquare({ row, col });
-      console.log(`Row: ${row}, Col: ${col}, Figure: ${selectedFigure.name}`);
+      // console.log(`Row: ${row}, Col: ${col}, Figure: ${selectedFigure.name}, Alias: ${selectedFigure.key}`);
       calculatePossibleMoves({ row, col }, selectedFigure);
       setSelectedFigure(null);
       setSelectedSquare(null);
@@ -33,7 +33,7 @@ function App() {
   }
 
   //Figure movement
-  //king
+  //King
   const kingMovement = [
     [0, +1],
     [0, -1],
@@ -45,8 +45,8 @@ function App() {
     [-1, -1],
   ];
 
-  //rook
-  const rookMovement = [
+  //Rook
+  const knightMovement = [
     [+1, +2],
     [+1, -2],
     [-1, +2],
@@ -57,8 +57,25 @@ function App() {
     [-2, -1]
   ];
 
-  const calculatePossibleMoves = (selectedFigure, selectedSquare) => {
-    console.log(selectedSquare);
+  const calculatePossibleMoves = (selectedSquare, selectedFigure) => {
+    console.log(`Figure: ${selectedFigure.name}, Square:`, selectedSquare);
+    console.log(selectedFigure.key)
+    let possibleMoves = [];
+    switch (selectedFigure.key) {
+      //King
+      case 'k': possibleMoves = kingMovement.map(([dx, dy]) => ({
+        row: selectedSquare.row + dx,
+        col: selectedSquare.col + dy,
+      }));
+        break;
+      //Rook
+      case 'n': possibleMoves = knightMovement.map(([dx, dy]) => ({
+        row: selectedSquare.row + dx,
+        col: selectedSquare.col + dy,
+      }));
+        break;
+    }
+    console.log(possibleMoves)
   };
 
   return (

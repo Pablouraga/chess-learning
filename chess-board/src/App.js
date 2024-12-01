@@ -8,15 +8,25 @@ function App() {
   const [selectedFigure, setSelectedFigure] = useState(null);
   const [selectedSquare, setSelectedSquare] = useState(null);
 
+  //Figure translation
+  const figureDictionary = new Map([
+    ['k', 'king'],
+    ['q', 'queen'],
+    ['b', 'bishop'],
+    ['n', 'knight'],
+    ['r', 'rook'],
+    ['p', 'pawn'],
+  ]);
+
   const handleFigurePicked = (figure) => {
-    // console.log(`Figure ${figure}`);
     setSelectedFigure(figure);
   }
 
   const handleSquarePicked = (row, col) => {
     if (selectedFigure != null) {
       setSelectedSquare({ row, col });
-      console.log(`Row: ${row}, Col: ${col}, Figure: ${selectedFigure}`)
+      console.log(`Row: ${row}, Col: ${col}, Figure: ${selectedFigure.name}`);
+      calculatePossibleMoves({ row, col }, selectedFigure);
       setSelectedFigure(null);
       setSelectedSquare(null);
     }
@@ -46,6 +56,10 @@ function App() {
     [-2, +1],
     [-2, -1]
   ];
+
+  const calculatePossibleMoves = (selectedFigure, selectedSquare) => {
+    console.log(selectedSquare);
+  };
 
   return (
     <div className="App">

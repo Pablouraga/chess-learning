@@ -18,11 +18,11 @@ const FigurePicker = ({ onClick }) => {
 
     return (
         <div className='figure-picker'>
-            {[...figureMap.keys()].map((figure) => (
+            {[...figureMap.keys()].map((figureKey) => (
                 <Figure
-                    key={figure}
-                    figure={figure}
-                    onClick={() => onClick(figure)}
+                    key={figureKey}
+                    figure={figureKey}
+                    onClick={() => onClick({key: figureKey, name: figureMap.get(figureKey)})}
                 />
             ))}
         </div>

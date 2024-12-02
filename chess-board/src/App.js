@@ -8,16 +8,6 @@ function App() {
   const [selectedFigure, setSelectedFigure] = useState(null);
   const [selectedSquare, setSelectedSquare] = useState(null);
 
-  //Figure translation
-  const figureDictionary = new Map([
-    ['k', 'king'],
-    ['q', 'queen'],
-    ['b', 'bishop'],
-    ['n', 'knight'],
-    ['r', 'rook'],
-    ['p', 'pawn'],
-  ]);
-
   const handleFigurePicked = (figure) => {
     setSelectedFigure(figure);
   }
@@ -57,6 +47,26 @@ function App() {
     [-2, -1]
   ];
 
+  const calculateRookMovement = (selectedSquare) => {
+    const { row, col } = selectedSquare;
+    const possibleMoves = [];
+
+    //Row
+    for (let rowCounter = 0; rowCounter < 8; rowCounter++) {
+      if (rowCounter !== row) {
+        possibleMoves.push({ row: rowCounter, col })
+      }
+    }
+
+    //Col
+    for (let colCounter = 0; colCounter < 8; colCounter++) {
+      if (colCounter !== col) {
+        possibleMoves.push({ row, col: colCounter })
+      }
+    }
+    return possibleMoves;
+  }
+
   const calculatePossibleMoves = (selectedSquare, selectedFigure) => {
     console.log(`Figure: ${selectedFigure.name}, Square:`, selectedSquare);
     console.log(selectedFigure.key)
@@ -68,13 +78,28 @@ function App() {
         col: selectedSquare.col + dy,
       }));
         break;
-      //Rook
+
+      //Knight
       case 'n': possibleMoves = knightMovement.map(([dx, dy]) => ({
         row: selectedSquare.row + dx,
         col: selectedSquare.col + dy,
       }));
         break;
+
+      //Rook
+      case 'r':
+        possibleMoves = calculateRookMovement(selectedSquare);
+        break;
+
+      default:
+        break;
     }
+
+    //filter out squares out of the board
+    possibleMoves = possibleMoves.filter(
+      (move) =>
+        move.row >= 0 && move.row <= 7 && move.col >= 0 && move.col <= 7
+    )
     console.log(possibleMoves)
   };
 

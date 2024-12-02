@@ -8,6 +8,9 @@ function App() {
   const [selectedFigure, setSelectedFigure] = useState(null);
   const [selectedSquare, setSelectedSquare] = useState(null);
 
+  const [possibleMoves, setPossibleMoves] = useState([]);
+
+
   const handleFigurePicked = (figure) => {
     setSelectedFigure(figure);
   }
@@ -67,6 +70,27 @@ function App() {
     return possibleMoves;
   }
 
+  const calculateBishopMovement = (selectedSquare) => {
+    const { row, col } = selectedSquare;
+    const possibleMoves = [];
+
+    for (let index = 1; index < 8; index++) {
+      if (row + index < 8 && col + index < 8) possibleMoves.push({ row: row + index, col: col + index }); // Hacia abajo-derecha
+      if (row - index >= 0 && col - index >= 0) possibleMoves.push({ row: row - index, col: col - index }); // Hacia arriba-izquierda
+      if (row + index < 8 && col - index >= 0) possibleMoves.push({ row: row + index, col: col - index }); // Hacia abajo-izquierda
+      if (row - index >= 0 && col + index < 8) possibleMoves.push({ row: row - index, col: col + index }); // Hacia arriba-derecha
+    }
+
+    return possibleMoves;
+  }
+
+  const calculateQueenMovement = (selectedSquare) => {
+    const { row, col } = selectedSquare;
+    const possibleMoves = [];
+
+    //north-east
+  }
+
   const calculatePossibleMoves = (selectedSquare, selectedFigure) => {
     console.log(`Figure: ${selectedFigure.name}, Square:`, selectedSquare);
     console.log(selectedFigure.key)
@@ -87,8 +111,18 @@ function App() {
         break;
 
       //Rook
-      case 'r':
-        possibleMoves = calculateRookMovement(selectedSquare);
+      // case 'r':
+      //   possibleMoves = calculateRookMovement(selectedSquare);
+      //   break;
+
+      //Bishop
+      case 'b':
+        possibleMoves = calculateBishopMovement(selectedSquare)
+        break;
+
+      //Queen
+      case 'q':
+        possibleMoves = calculateQueenMovement(selectedSquare);
         break;
 
       default:
@@ -100,6 +134,7 @@ function App() {
       (move) =>
         move.row >= 0 && move.row <= 7 && move.col >= 0 && move.col <= 7
     )
+    setPossibleMoves(possibleMoves)
     console.log(possibleMoves)
   };
 
@@ -107,7 +142,7 @@ function App() {
     <div className="App">
       <h1>Chess Learning</h1>
       <div className="main-container">
-        <Board onClick={handleSquarePicked} />
+        <Board onClick={handleSquarePicked} possibleMoves={possibleMoves} />
         <FigurePicker onClick={handleFigurePicked} />
       </div>
     </div>
